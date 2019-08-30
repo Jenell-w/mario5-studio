@@ -40,12 +40,10 @@
                         TODO 3 add a v-model directive to the input,
                         so that Vue will store it for us as 'heightStr'.
                     -->
-                    <input type="text" id="height" :class="error ? 'invalid-field': null" />
+                    <input type="text" id="height" v-model="heightStr" placeholder="Type here" :class="error ? 'invalid-field': null" />
                     <label class="error-message">
-                        <!--
-                        TODO 2
-                        Render the error message from data right here
-                        -->
+                        
+                        <p>{{ error }}</p>
                     </label>
                 </label>
                 <br><br>
@@ -58,8 +56,11 @@
 
             <br><br>
 
-            <div id="pyramid">
-                <!--
+            <div id="pyramid"
+            v-for="row in rows"
+            v-html="row">
+                <p> {{ row.innerHTML }} </p> //this is probbaly not corrent
+                 <!--
                 TODO 6: Add some Vue.js code right here.
                 You'll want to use v-for="row in rows"
                 and make a <p> for each one.

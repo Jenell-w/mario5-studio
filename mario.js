@@ -3,31 +3,29 @@ var mario = new Vue({
     el: 'main',
     data: function() {
         return {
-            heightStr: '5',
-            height: 5,
-            error: null, // Delete this line when you finish TODO 4
-        };
+            heightStr: 0,
+            height: 5
+        }
     },
-    computed: {
-        rows: function() {
+        computed: {
+            rows: function() {
+               return pyramidRows(this.height)
             // TODO 5
             // Fill out this computed property by calling
             // pyramidRows on this.height.
         },
-        // TODO 4 (and two other places: search for "TODO 4")
+        error: function() {
+            return checkForErrors() 
+        }
         // Make a new computed property 'error'.
         // It should be the result of calling checkForErrors on this.heightStr.
-        // (Delete the error key from data once this is done)
+        
 
     },
     methods: {
         clearAndRedraw(evt) {
             // Stop the form from causing a page refresh.
             evt.preventDefault();
-
-            // TODO 4
-            // Delete the next line. It now happens for us automatically via computed properties
-            this.error = checkForErrors(this.heightStr);
 
             if (this.error) {
                 // Stop drawing, we've got errors.
@@ -40,7 +38,7 @@ var mario = new Vue({
             pyramid.innerHTML = '';
 
             // Again, isn't Vue supposed to help with this...
-            var rows = pyramidRows(this.height); // TODO 5: Use this.rows instead (the computed property you just made)
+            var rows = pyramidRows(this.rows); // TODO 5: Use this.rows instead (the computed property you just made)
             for (var ix = 0; ix < rows.length; ix++) {
                 var row = document.createElement('p');
                 row.innerHTML = rows[ix];
@@ -65,8 +63,21 @@ var mario = new Vue({
  */
 function checkForErrors(heightStr) {
     // TODO 1
-    // Fill out this function.
-}
+    if (heightStr === '') {
+        let error = "Please enter a height"
+        return error;
+    }
+    if (isNaN(heightStr)) {
+        let error = "Height is not a number"
+        return error;
+    }
+    if (heightStr < 1 || heightStr >100) {
+        let error = "Height must be greater than 1 and less than 100"
+        return error;
+    }
+    return null;
+    
+  }
 
 
 /**
